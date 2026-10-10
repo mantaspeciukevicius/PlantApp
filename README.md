@@ -1,74 +1,61 @@
 # Plant App
 
-## How to Run
+A Flask coursework application for managing plants, plant groups, watering records, departments and projects, with user authentication and role-aware routes.
 
-To run the app locally, follow these steps:
+## Origin
 
-1. Create a virtual environment: `python3 -m venv auth`
-2. Activate the virtual environment:
-   - For Windows: `. auth/Scripts/activate`
-   - For Ubuntu: `. auth/bin/activate`
-3. Install the requirements: `pip install -r requirements.txt`
-4. Set the `FLASK_APP` environment variable: `export FLASK_APP=project`
-5. Run the app: `flask run`
-6. (Optional) Update the `requirements.txt` file with any new packages: `pip freeze > requirements.txt`
+**Original creation date: 25 February 2023.** The GitHub repository and its earliest recorded commit date to this day.
 
-## Flask DB Migration
+The original application was created by Mantas Peciukevičius during the **Code Academy course, without AI assistance**. This statement describes the original coursework; the portfolio documentation was refreshed later. The project builds on the author’s earlier bill-splitting coursework, as recorded in its first commit.
 
-To perform a Flask database migration, follow these steps:
+## Features in the source
 
-1. Make sure the Flask-Migrate package is installed: pip install Flask-Migrate
-2. Create a migration repository: flask db init
-3. Create a migration script: flask db migrate -m "migration message"
-4. Upgrade the database: flask db upgrade
-5. To downgrade the database, run flask db downgrade with the name of the revision to downgrade to.
+- User registration, login/logout and profile pages.
+- Plant groups, individual plants, editing and deletion.
+- Plant watering history and group-to-user assignments.
+- Departments, projects and their relationships.
+- Earlier bill/group models retained from the source application.
+- Form validation and JWT-based route authorization helpers.
 
-## Credentials
+This repository documents a historical course project. The feature list reflects the source, rather than a claim that every workflow has been verified on current dependencies.
 
-You can use these credentials to test:
+## Technology stack
 
-- Email: asas@gmail.com
-- Password: asasas
+| Layer | Technologies |
+| --- | --- |
+| Language / web framework | Python, Flask 2.2.3, Flask blueprints and application factory |
+| Database | SQLite, SQLAlchemy 1.4.46, Flask-SQLAlchemy 3.0.2 |
+| Authentication | Flask-Login, Werkzeug password hashing, PyJWT |
+| Forms | WTForms, Flask-WTF |
+| Templates / styling | Jinja2, HTML/CSS, Bulma and Bootstrap |
+| Database migrations | Flask-Migrate and Alembic |
+| HTTP requests | Requests |
 
-## Groups Database
+Exact historical dependencies are listed in `requirements.txt`. Flask-Script is also present in the older migration helper; the normal application entry point is the Flask factory.
 
-![image](https://i.imgur.com/C1xxeJH.png)
+## Run locally
 
-## Styles Used
+Use a fresh Python 3.10 virtual environment rather than a previously committed environment or database:
 
-- CSS Bulma
-- CSS Bootstrap
+```sh
+python3.10 -m venv .venv
+# Linux / macOS
+. .venv/bin/activate
+# Windows PowerShell: .venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python -c "from project import create_app, db; app = create_app(); app.app_context().push(); db.create_all()"
+flask --app project run --host 127.0.0.1
+```
 
-## Technologies Used
+Open `http://127.0.0.1:5000` and register your own local test account. Review account roles in the source when testing management routes. Set a fresh Flask secret key before using the app beyond a local coursework demonstration.
 
-- JWT token
-- SQLAlchemy
-- Werkzeug
-- Jinja2
+## Repository layout
 
-## Plant App
+- `project/__init__.py`: application factory, extension setup and blueprint registration.
+- `project/auth.py`: account and authorization routes.
+- `project/plants.py`: plant and plant-group workflows.
+- `project/departments.py`: departments and projects.
+- `project/models.py`: SQLAlchemy models and relationships.
+- `project/templates/`: Jinja pages.
 
-### Features
-
-- Create, delete, and edit plant groups
-- Assign plant groups to friends to share and track plants
-- Add, remove, and edit plants and their characteristics
-- Upload pictures for plants (not currently viewable)
-- Track the watering history of individual plants
-- Remove last watering entry if entered accidentally
-- Pre-select today's date when watering plants, but select a custom date in the calendar
-
-## Department Project Management App
-
-### Features
-
-- Create, delete, and edit departments
-- Create, delete, and edit projects
-- Assign projects to departments and vice versa
-- Prepopulate information if the project is already assigned to a department and vice versa
-
-## Bill Split App
-
-### Features
-
-- Enter expenses and split them among friends
+Runtime databases and credentials are not required to understand this project. Create a new database locally; do not publish account data or environment files.
