@@ -27,3 +27,15 @@ build/
 .idea/
 docs/_build/
 .vscode
+# Local runtime and credentials
+instance/
+*.sqlite
+*.sqlite3
+*.db
+.env
+.venv/
+venv/
+auth/Lib/
+auth/Scripts/
+__pycache__/
+*.pyc
